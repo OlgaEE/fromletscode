@@ -92,3 +92,71 @@ public interface MessageRepo extends CrudRepository<Message, Integer> {
 
 getbootstrap.com/docs/4.0/utilities/spacing/   отступы  <div class="conteiner mt-5">  сверху от navbar
 
+Securing a Web Application from spring.io
+create new package .config and class MvcConfig.java
+
+                                            import org.springframework.context.annotation.Configuration;
+                                            import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+                                            import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+                                            @Configuration
+                                            public class MvcConfig implements WebMvcConfigurer {
+
+                                                public void addViewControllers(ViewControllerRegistry registry) {
+                                                    registry.addViewController("/login").setViewName("login");
+                                                }
+
+                                            }
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+create WebSecurityConfig.java    copy from guides
+
+                        import org.springframework.context.annotation.Bean;
+                        import org.springframework.context.annotation.Configuration;
+                        import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+                        import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+                        import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+                        import org.springframework.security.core.userdetails.User;
+                        import org.springframework.security.core.userdetails.UserDetails;
+                        import org.springframework.security.core.userdetails.UserDetailsService;
+                        import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+                        @Configuration
+                        @EnableWebSecurity
+                        public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+                            @Override
+                            protected void configure(HttpSecurity http) throws Exception {
+                                http
+                                    .authorizeRequests()
+                                        .antMatchers("/", "/home").permitAll()
+                                        .anyRequest().authenticated()
+                                        .and()
+                                    .formLogin()
+                                        .loginPage("/login")
+                                        .permitAll()
+                                        .and()
+                                    .logout()
+                                        .permitAll();
+                            }
+
+                            @Bean
+                            @Override
+                            public UserDetailsService userDetailsService() {
+                                UserDetails user =
+                                     User.withDefaultPasswordEncoder()
+                                        .username("user")
+                                        .password("password")
+                                        .roles("USER")
+                                        .build();
+
+                                return new InMemoryUserDetailsManager(user);
+                            }
+                        }
+create login.mustache
+                        <input type="hidden" name="_csrf" value="{{ _csrf.token }}"/>
+User.java -> for users registration
+
+

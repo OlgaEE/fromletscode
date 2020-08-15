@@ -1,4 +1,4 @@
-package eu.comweb.letscode.domen;
+package eu.comweb.letscode.domain;
 
 import lombok.Getter;
 import lombok.Setter;

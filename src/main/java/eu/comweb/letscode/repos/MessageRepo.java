@@ -1,6 +1,6 @@
 package eu.comweb.letscode.repos;
 
-import eu.comweb.letscode.domen.Message;
+import eu.comweb.letscode.domain.Message;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
