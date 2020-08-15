@@ -1,0 +1,94 @@
+to starting: copy from spring.io/guides -> MVC :
+    at first: copy maven-dependencies
+    at second: create Controller, for this copy GreetingController.java
+    at third: create Application.java - start-file for app
+
+                                        @Controller
+                                        public class GreetingController {
+
+                                            @GetMapping("/greeting")
+                                            public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Map<String, Object> model) {
+                                                model.put("name", name);
+                                                return "greeting";
+                                            }
+
+                                            @GetMapping
+                                            public String main(Map<String, Object> model) {
+                                                model.put("some", "hello letscode!");
+                                                return "main";
+                                            }
+
+                                        }
+                                        main.mustache
+                                        <html>
+                                        <body>
+                                            <div>{{ some }}</div>
+                                        </body>
+                                        </html>
+to connect with DB
+open spring-guides -> mysql
+copy to pom.xml:      spring-boot-starter-data-jpa   and
+                        <dependency>
+                                    <groupId>org.postgresql</groupId>
+                                    <artifactId>postgresql</artifactId>
+                                    <scope>runtime</scope>
+                                </dependency>
+
+create in recources application.properties
+
+IntelliJ Idea - New Project - maven - eu.comweb.letscode
+
+from https://spring.io/guides/gs/serving-web-content/  mvc copy:
+1. copy to pom.xml : parent!, dependenses
+2. create in src/main/java: eu.comweb.letscode
+3. create in src/main/java/eu/comweb/letscode: MainController.java and copy there controller-file from spring.io
+4. create in resources: templates
+5. create in resources/templates: home.html and copy there from spring.io greeting.html
+   change "greeting"-text
+6. create in src/main/java/eu/comweb/letscode: Application.java  (main file for starting)
+    copy there from spring.io
+
+Whitelabel Error Page starts up if MainController does not see a right url
+
+if we use MUSTACHE , so the names of files must be as main.mustache
+
+***MainController.java
+@GetMapping("/home")
+    public String home(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+        model.addAttribute("title", "LETSCODE Second Page");
+        return "home";                                  //second page  localhost:8080/home
+    }
+
+    @GetMapping                                         // main page on localhost:8080
+    public String main(Map<String, Object> model) {
+        model.put("some", "Hello, letscode");
+        return "main";
+    }
+
+***DATABASE CONNECTION***
+Create a resource file called src/main/resources/application.properties with
+
+spring.jpa.hibernate.ddl-auto=create
+spring.datasource.url=jdbc:postgresql://localhost/letscode
+spring.datasource.username=postgres
+spring.datasource.password=12345
+spring.jpa.generate-ddl=true
+
+create the entity model, as the following listing (in src/main/java/eu/comweb/letscode/domain/Message.java
+// Lombok
+@EqualsAndHashCode(of = "id")
+@Getter @Setter // генерация гетеров-сетеров для всех полей класса
+// JPA
+@Entity // все поля класса будут автоматически связаны со столбцами таблицы
+
+Create the Repository
+eu.comweb.letscode.repos: MessageRepo.java
+                                                     User
+public interface MessageRepo extends CrudRepository<Message, Integer> {
+
+}
+
+***нужен пустой конструктор*****
+
+getbootstrap.com/docs/4.0/utilities/spacing/   отступы  <div class="conteiner mt-5">  сверху от navbar
+
