@@ -68,7 +68,7 @@ if we use MUSTACHE , so the names of files must be as main.mustache
 ***DATABASE CONNECTION***
 Create a resource file called src/main/resources/application.properties with
 
-spring.jpa.hibernate.ddl-auto=create
+spring.jpa.hibernate.ddl-auto=create // update
 spring.datasource.url=jdbc:postgresql://localhost/letscode
 spring.datasource.username=postgres
 spring.datasource.password=12345
@@ -158,5 +158,10 @@ create WebSecurityConfig.java    copy from guides
 create login.mustache
                         <input type="hidden" name="_csrf" value="{{ _csrf.token }}"/>
 User.java -> for users registration
+
+UserController.java and userList.ftlh - for roles
+                                        for users editing
+
+Uploading Files
 
 
